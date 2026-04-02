@@ -25,7 +25,7 @@ local Data = HttpService:JSONEncode({
     h = (gethwid and gethwid()) or game:GetService("RbxAnalyticsService"):GetClientId()
 })
 
-local ws = (syn and syn.websocket or WebSocket).connect(WS_URL)
+local ws = WebSocket.connect(WS_URL)
 if not ws then return end
 
 local Done = false

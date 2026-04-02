@@ -6,7 +6,7 @@ local WS_URL = "wss://booo-jczf.onrender.com"
 local AuthTime = os.clock()
 local EncryptionKey = "f7a2b9c4d1e6f3a8b5c2d9e4f1a6b3c8"
 
-local function EncryptLightspeed(Input)
+local function Encrypt(Input)
     local Result = {}
     local InputLen = #Input
     local KeyLen = #EncryptionKey

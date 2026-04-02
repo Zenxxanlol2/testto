@@ -48,4 +48,4 @@ ws:Close()
 if not Success then return end
 
 print("[AUTH] " .. string.format("%.3fms", (os.clock() - AuthTime) * 1000))
-loadstring(game:HttpGet("https://your-script-url.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Zenxxanlol2/testto/refs/heads/main/test.lua"))()

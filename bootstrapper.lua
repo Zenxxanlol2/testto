@@ -161,4 +161,4 @@ if not AuthSuccess then
     return
 end
 
-loadstring(game:HttpGet("https://your-raw-script-url.com/script.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Zenxxanlol2/testto/refs/heads/main/test.lua"))()

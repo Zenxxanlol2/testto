@@ -94,11 +94,10 @@ end
 
 local ScriptKey = getgenv().ScriptKey
 if not ScriptKey or ScriptKey == "" then
-    Players.LocalPlayer:Kick("No key provided.   Contact Support At Discord Server")
+    Players.LocalPlayer:Kick("No key provided. Contact Support At Discord Server")
     return
 end
 
-local UserId = tostringOriginal(LocalPlayer.UserId)
 local HWID = gethwid()
 local Nonce = tostringOriginal(mathRandomOriginal(1000000, 9999999))
 local Timestamp = tostringOriginal(osTimeOriginal())
@@ -107,7 +106,7 @@ local EncryptedTimestamp = Base64Encode(EncryptData(Timestamp, EncryptionKey))
 
 local ws = WebSocket.connect(WS_URL)
 if not ws then
-    printk("Failed to connect to auth server.")
+    print("Failed to connect to auth server.")
     return
 end
 
@@ -136,7 +135,6 @@ end)
 
 ws:Send(HttpService:JSONEncode({
     type = "auth",
-    userId = UserId,
     key = ScriptKey,
     hwid = HWID,
     encryptedNonce = EncryptedNonce,
@@ -160,5 +158,7 @@ if not AuthSuccess then
     print(AuthMessage)
     return
 end
+
+print("Authenticated in " .. stringFormatOriginal("%.2f", mathAbsOriginal(AuthTime - os.clock())) .. "s")
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Zenxxanlol2/testto/refs/heads/main/test.lua"))()

@@ -3,19 +3,15 @@ local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 local WS_URL = "wss://booo-jczf.onrender.com"
 
-local AuthTime = os.clock()
-
 local pcallOriginal = pcall
 local tostringOriginal = tostring
 local stringByteOriginal = string.byte
 local stringCharOriginal = string.char
 local stringSubOriginal = string.sub
 local stringReverseOriginal = string.reverse
-local stringFormatOriginal = string.format
 local tableInsertOriginal = table.insert
 local tableConcatOriginal = table.concat
 local mathRandomOriginal = math.random
-local mathAbsOriginal = math.abs
 local osTimeOriginal = os.time
 local bit32BxorOriginal = bit32.bxor
 
@@ -94,7 +90,7 @@ end
 
 local ScriptKey = getgenv().ScriptKey
 if not ScriptKey or ScriptKey == "" then
-    Players.LocalPlayer:Kick("No key provided. Contact Support At Discord Server")
+    LocalPlayer:Kick("No key provided.")
     return
 end
 
@@ -112,7 +108,6 @@ end
 
 local AuthSuccess = false
 local AuthMessage = ""
-local ReceivedResponse = false
 
 ws.OnMessage:Connect(function(Message)
     local Success, Data = pcallOriginal(function()
@@ -121,15 +116,20 @@ ws.OnMessage:Connect(function(Message)
     if Success and Data and Data.type == "auth_response" then
         AuthSuccess = Data.success
         AuthMessage = Data.message
-        ReceivedResponse = true
+        if AuthSuccess then
+            print("Authenticated!")
+            ws:Close()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/Zenxxanlol2/testto/refs/heads/main/test.lua"))()
+        else
+            print("Auth failed: " .. AuthMessage)
+            ws:Close()
+        end
     end
 end)
 
 ws.OnClose:Connect(function()
-    if not ReceivedResponse then
-        AuthSuccess = false
-        AuthMessage = "Connection closed before response"
-        ReceivedResponse = true
+    if not AuthSuccess then
+        print("Connection closed - Auth failed")
     end
 end)
 
@@ -140,24 +140,3 @@ ws:Send(HttpService:JSONEncode({
     encryptedNonce = EncryptedNonce,
     encryptedTimestamp = EncryptedTimestamp
 }))
-
-local Timeout = 0
-while not ReceivedResponse and Timeout < 100 do
-    task.wait(0.1)
-    Timeout = Timeout + 1
-end
-
-ws:Close()
-
-if not ReceivedResponse then
-    print("Auth server timeout.")
-    return
-end
-
-if not AuthSuccess then
-    print(AuthMessage)
-    return
-end
-
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Zenxxanlol2/testto/refs/heads/main/test.lua"))()
-

@@ -143,6 +143,7 @@ ws:Send(HttpService:JSONEncode({
 
 local Timeout = 0
 while not ReceivedResponse and Timeout < 100 do
+    task.wait(0.1)
     Timeout = Timeout + 1
 end
 

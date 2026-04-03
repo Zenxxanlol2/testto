@@ -157,7 +157,7 @@ if not ReceivedResponse then
 end
 
 if not AuthSuccess then
-    Players.LocalPlayer:Kick(AuthMessage)
+    print(AuthMessage)
     return
 end
 

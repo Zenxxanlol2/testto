@@ -90,7 +90,7 @@ end
 
 local ScriptKey = getgenv().ScriptKey
 if not ScriptKey or ScriptKey == "" then
-    LocalPlayer:Kick("No key provided.")
+    LocalPlayer:Kick("No key provided.\n\nContact support in Discord")
     return
 end
 
@@ -102,7 +102,7 @@ local EncryptedTimestamp = Base64Encode(EncryptData(Timestamp, EncryptionKey))
 
 local ws = WebSocket.connect(WS_URL)
 if not ws then
-    print("Failed to connect to auth server.")
+    print("Failed Tell Zenx")
     return
 end
 
@@ -121,7 +121,7 @@ ws.OnMessage:Connect(function(Message)
             ws:Close()
             loadstring(game:HttpGet("https://raw.githubusercontent.com/Zenxxanlol2/testto/refs/heads/main/test.lua"))()
         else
-            print("Auth failed: " .. AuthMessage)
+            LocalPlayer:Kick("Auth Failed: " .. AuthMessage .. "\n\nContact support in Discord")
             ws:Close()
         end
     end

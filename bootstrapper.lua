@@ -143,7 +143,6 @@ ws:Send(HttpService:JSONEncode({
 
 local Timeout = 0
 while not ReceivedResponse and Timeout < 100 do
-    task.wait(0.1)
     Timeout = Timeout + 1
 end
 
@@ -158,7 +157,5 @@ if not AuthSuccess then
     print(AuthMessage)
     return
 end
-
-print("Authenticated in " .. stringFormatOriginal("%.2f", mathAbsOriginal(AuthTime - os.clock())) .. "s")
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Zenxxanlol2/testto/refs/heads/main/test.lua"))()
